@@ -115,19 +115,20 @@ app.get("/plant/:id",(req,res)=>{
     res.json({
         success: plant ? true : false,
         Data: plant,
-        message : plant ? "Plant fetched successfully" : "Plant not found"
+        message : plant ? "Plant fetched successfully" : "Plant not found",
 
      })
 })
 
 //
-app.put("/plant/:id",(res,req)=>
-{
-    const {name,
+app.put("/plant/:id",(res,req)=>{
+    const{
+         name,
         category,
         image,
         price,
-        description} = req.body
+        description
+    } = req.body
 
 
     const {id} = req.params
@@ -141,44 +142,61 @@ app.put("/plant/:id",(res,req)=>
  })
 
  //
- const newobj = {
-    iid,
+ const newObj = {
+     id,
     name,
     category,
     image,
     price,
     description
-
  }
  if (index ==-1){
     return res.json({
         success: false,
         Data: null,
-        message: `Plant not found for id ${id}`
+        message: `Plant not found for id ${id}`,
     })
 }
 else{
-    plants[index] = newobj
+    plants [index] = newObj
     
     return res.json({
         success: true,
-        Data: newobj,
+        Data: newObj,
         message: "Plant updated successfully"
     })
-
-
-
-    
-}
  
+}
+  
+})
 
+app.delete ("/plant/:id",(req,res)=>{
+    const {id} = req.params
 
+    let index = -1
 
-   res.json({
-        success: true,
-        Data:index,
-        message: "Plant updated successfully"
-   })
+    plants.forEach((plant,i)=>{
+        if(plant.id==id){
+            index = i
+        }
+    })
+
+    if(index==-1){
+        return res.json({
+            success: false,
+            Data: null,
+            message: `Plant not found for id ${id}`,
+        })
+    }
+
+plants.splice(index,1)
+
+    res.json({
+        success:true,
+        message: "Plant deleted successfully",
+        data: null
+
+    })
 })
 
 const PORT = 5000
