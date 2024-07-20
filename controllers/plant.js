@@ -197,16 +197,12 @@ plants.splice(index,1)
 
 
 //
-const useAll=(req,res)=>{
 
-    res.send(`<div>
-        <h1 style="text-align:center;"> 404 Not Found</h1></div>`)
-}
 export{
     postPlant,
     getPlants,
     getPlant,
     putPlant,
     deletePlant,
-    useAll
+  
 }

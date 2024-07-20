@@ -2,11 +2,25 @@ import express  from "express";
 import dotenv from  "dotenv"
 dotenv.config()
 
+import mongoose from "mongoose";
 import { getHealth } from "./controllers/health.js";
-import {postPlant,  getPlants, getPlant, putPlant, deletePlant, useAll} from "./controllers/plant.js";
+import {postPlant,  getPlants, getPlant, putPlant, deletePlant, } from "./controllers/plant.js";
+import {useError} from "./controllers/errors.js";
 
 const app = express()
 app.use(express.json())
+
+const dbConnection=async()=>{
+    const conn = await mongoose.connect(process.env.MONGO_URI)
+
+    if(conn){
+        console.log('MongoDB Connected..✔')
+    }
+else{
+        console.log('MongoDB Not Conneced..❌')
+     }
+  }
+  dbConnection();
 
 //temporary DB  
 const plants = [
@@ -46,7 +60,7 @@ app.put("/plant/:id",putPlant)
 
 app.delete ("/plant/:id",deletePlant)
 
-app.use("*", useAll)
+app.use("*", useError)
 
 const PORT = process.env.PORT
 
