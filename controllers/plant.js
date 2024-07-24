@@ -38,7 +38,7 @@ const allPlants = await Plant.find()
 
     res.json({
         success: true,
-        Data: plants,
+        Data:allPlants,
         message: "All plants fetched successfully"
 
      })
@@ -83,7 +83,7 @@ const getPlant= async(req,res)=>{
 
         res.json({
             success: true,
-            Data: updateResult,
+            Data: updatePlant,
             message: "Plant updated successfully"
         })
     }
@@ -92,26 +92,12 @@ const getPlant= async(req,res)=>{
 
    
 //
-const deletePlantId= (req,res)=>{
+const deletePlantId= async(req,res)=>{
     const {id} = req.params
 
-    let index = -1
-
-    plants.forEach((plant,i)=>{
-        if(plant.id==id){
-            index = i
-        }
+    await Plant.deleteOne({
+        _id:id
     })
-
-    if(index==-1){
-        return res.json({
-            success: false,
-            Data: null,
-            message: `Plant not found for id ${id}`,
-        })
-    }
-
-plants.splice(index,1)
 
     res.json({
         success:true,
