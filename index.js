@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 
 import { getHealth } from "./controllers/health.js";
-import {postPlant,  getPlants, getPlant, putPlantId, deletePlantId, } from "./controllers/plant.js";
+import {postPlant,  getPlants, getPlantId, putPlantId, deletePlantId, } from "./controllers/plant.js";
 import {useError} from "./controllers/errors.js";
 
 const app = express()
@@ -38,7 +38,7 @@ app.post("/plant",postPlant)
 app.get("/plants", getPlants)
 
 //for  find data
-app.get("/plant/:id",getPlant)
+app.get("/plant/:id",getPlantId)
 
 // updae
 app.put("/plant/:id",putPlantId)
@@ -47,7 +47,7 @@ app.delete ("/plant/:id",deletePlantId)
 
 app.use("*", useError)
 
-const PORT = process.env.PORT 
-
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{
-    console.log(`Server is running on port ${PORT}`)})
+    console.log(`Server is running on port ${PORT}`)
+})

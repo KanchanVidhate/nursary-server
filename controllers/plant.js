@@ -1,8 +1,5 @@
 import Plant from "./../models/plant.js"
 
-//temporary DB  
-const plants = []
-
 const postPlant= async (req,res)=>{
     const{
         name,
@@ -34,7 +31,7 @@ const savedPlant = await newPlant.save();
 }
 
 const getPlants= async (req,res)=>{
-const allPlants = await Plant.find()
+const allPlants = await Plant.find().sort({createdAt: -1})
 
     res.json({
         success: true,
@@ -45,7 +42,7 @@ const allPlants = await Plant.find()
 }
 
 //
-const getPlant= async(req,res)=>{
+const getPlantId= async(req,res)=>{
     const {id} = req.params
     const plant =await Plant.findById( id )
    
@@ -58,7 +55,9 @@ const getPlant= async(req,res)=>{
      })
 }
 
-//
+
+
+ //
  const putPlantId= async (res,req)=>{
     const {
         name,
@@ -69,6 +68,7 @@ const getPlant= async(req,res)=>{
      } = req.body
 
     const {id} = req.params
+
    await Plant.updateOne({_id:id},{
         $set :{
 
@@ -87,10 +87,6 @@ const getPlant= async(req,res)=>{
             message: "Plant updated successfully"
         })
     }
-
-
-
-   
 //
 const deletePlantId= async(req,res)=>{
     const {id} = req.params
@@ -113,8 +109,9 @@ const deletePlantId= async(req,res)=>{
 export{
     postPlant,
     getPlants,
-    getPlant,
+    getPlantId,
     putPlantId,
     deletePlantId,
+  
   
 }
