@@ -7,3 +7,4 @@ const useError = (req,res)=>{
 export{
     useError
 }
+//404 not found
